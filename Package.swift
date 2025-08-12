@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [
         // IMPORTANT: This tag must match the Xcode/Swift toolchain.
         // For Xcode 16 / Swift 6.1, 600.x is correct. If you use Xcode 15, use 509.x.
-        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "600.0.0"),
+        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "601.0.1"),
     ],
     targets: [
         // Macro implementation target (compiler plugin). Not exposed as a product.
