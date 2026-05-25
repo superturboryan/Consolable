@@ -33,15 +33,15 @@ public struct ConsolableMacro: MemberMacro {
         }
         
         let prefixDecl: DeclSyntax = """
-        private static let __prefix: String? = \(raw: prefixExpr)
+        nonisolated private static let __prefix: String? = \(raw: prefixExpr)
         """
-        
+
         let categoryDecl: DeclSyntax = """
-        private static var __logCategory: String { \(raw: categoryExpr) }
+        nonisolated private static var __logCategory: String { \(raw: categoryExpr) }
         """
-        
+
         let loggerDecl: DeclSyntax = """
-        private static var __logger: Logger {
+        nonisolated private static var __logger: Logger {
           Logger(
             subsystem: \(raw: subsystemExpr),
             category: __logCategory
@@ -50,14 +50,14 @@ public struct ConsolableMacro: MemberMacro {
         """
         
         let prefixedFn: DeclSyntax = """
-        private static func __prefixed(_ message: String) -> String {
+        nonisolated private static func __prefixed(_ message: String) -> String {
           if let p = __prefix, !p.isEmpty { return "\\(p) \\(message)" }
           return message
         }
         """
         
         let instanceLog: DeclSyntax = """
-        private func log(_ message: String, isError: Bool = false) {
+        nonisolated private func log(_ message: String, isError: Bool = false) {
           let full = Self.__prefixed(message)
           if isError {
             Self.__logger.error("\\(full, privacy: .public)")
@@ -68,7 +68,7 @@ public struct ConsolableMacro: MemberMacro {
         """
 
         let staticLog: DeclSyntax = """
-        private static func log(_ message: String, isError: Bool = false) {
+        nonisolated private static func log(_ message: String, isError: Bool = false) {
           let full = __prefixed(message)
           if isError {
             __logger.error("\\(full, privacy: .public)")
